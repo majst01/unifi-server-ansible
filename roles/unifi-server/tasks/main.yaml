@@ -1,0 +1,45 @@
+---
+
+- name: install oracle
+  apt:
+    name: oracle-java8-jdk
+    state: latest
+
+- name: add unifi apt repo
+  apt_repository:
+    repo: deb http://www.ubnt.com/downloads/unifi/debian unifi5 ubiquiti
+    state: present
+
+- name: add unifi apt key
+  apt_key:
+    keyserver: keyserver.ubuntu.com
+    id: C0A52C50
+
+- name: install unifi server
+  apt:
+    name: unifi=5.4.11-9184
+    state: present
+    update_cache: yes
+  notify: restart unifi
+
+- name: disable mongodb
+  lineinfile:
+    dest: /etc/mongodb.conf
+    regexp: '^ENABLE_MONGODB='
+    line: 'ENABLE_MONGODB=no'
+
+- name: download actual snappy-jar
+  get_url:
+    url: http://central.maven.org/maven2/org/xerial/snappy/snappy-java/1.1.2.6/snappy-java-1.1.2.6.jar
+    dest: /usr/lib/unifi/lib
+
+- name: remove old snappy-java
+  file:
+    path: /usr/lib/unifi/lib/snappy-java-1.0.5.jar
+    state: absent
+
+- name: create link from new snappy-java to old version
+  file:
+    src: /usr/lib/unifi/lib/snappy-java-1.1.2.6.jar
+    dest: /usr/lib/unifi/lib/snappy-java-1.0.5.jar
+    state: link

@@ -1,0 +1,7 @@
+---
+- name: Install unifi server on a rpi
+  hosts: unifi-server
+  become: yes
+  remote_user: pi
+  roles:
+    - role: unifi-server
