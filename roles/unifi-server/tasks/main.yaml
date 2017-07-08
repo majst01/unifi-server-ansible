@@ -7,7 +7,7 @@
 
 - name: add unifi apt repo
   apt_repository:
-    repo: deb http://www.ubnt.com/downloads/unifi/debian unifi5 ubiquiti
+    repo: deb http://www.ubnt.com/downloads/unifi/debian stable ubiquiti
     state: present
 
 - name: add unifi apt key
@@ -17,7 +17,7 @@
 
 - name: install unifi server
   apt:
-    name: unifi=5.4.11-9184
+    name: unifi=5.4.18-9252
     state: present
     update_cache: yes
   notify: restart unifi
@@ -30,7 +30,7 @@
 
 - name: download actual snappy-jar
   get_url:
-    url: http://central.maven.org/maven2/org/xerial/snappy/snappy-java/1.1.2.6/snappy-java-1.1.2.6.jar
+    url: http://central.maven.org/maven2/org/xerial/snappy/snappy-java/1.1.4/snappy-java-1.1.4.jar
     dest: /usr/lib/unifi/lib
 
 - name: remove old snappy-java
@@ -40,6 +40,6 @@
 
 - name: create link from new snappy-java to old version
   file:
-    src: /usr/lib/unifi/lib/snappy-java-1.1.2.6.jar
+    src: /usr/lib/unifi/lib/snappy-java-1.1.4.jar
     dest: /usr/lib/unifi/lib/snappy-java-1.0.5.jar
     state: link
