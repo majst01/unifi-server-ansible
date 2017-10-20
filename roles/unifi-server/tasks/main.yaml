@@ -10,6 +10,11 @@
     repo: deb http://www.ubnt.com/downloads/unifi/debian stable ubiquiti
     state: present
 
+- name: add unifi apt repo testing
+  apt_repository:
+    repo: deb http://www.ubnt.com/downloads/unifi/debian testing ubiquiti
+    state: present
+
 - name: add unifi apt key
   apt_key:
     keyserver: keyserver.ubuntu.com
@@ -17,7 +22,7 @@
 
 - name: install unifi server
   apt:
-    name: unifi=5.4.18-9252
+    name: unifi=5.6.19-10171
     state: present
     update_cache: yes
   notify: restart unifi
