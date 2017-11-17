@@ -22,7 +22,7 @@
 
 - name: install unifi server
   apt:
-    name: unifi=5.6.19-10171
+    name: unifi=5.6.22-10205
     state: present
     update_cache: yes
   notify: restart unifi
